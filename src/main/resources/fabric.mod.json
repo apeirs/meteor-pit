@@ -1,32 +1,18 @@
 {
   "schemaVersion": 1,
-  "id": "addon-template",
+  "id": "golden-head-addon",
   "version": "${version}",
-  "name": "Addon Template",
-  "description": "An addon template for Meteor Client addons.",
-  "authors": [
-    "seasnail"
-  ],
-  "contact": {
-    "sources": "https://github.com/MeteorDevelopment/meteor-addon-template"
-  },
-  "icon": "assets/template/icon.png",
+  "name": "Golden Head Addon",
+  "description": "Auto-uses Golden Heads on Pit servers.",
+  "authors": ["lucas"],
+  "icon": "assets/goldenhead/icon.png",
   "environment": "client",
   "entrypoints": {
-    "meteor": [
-      "com.example.addon.AddonTemplate"
-    ]
+    "meteor": ["dev.goldenhead.GoldenHeadAddon"]
   },
-  "mixins": [
-    "addon-template.mixins.json"
-  ],
   "custom": {
-    "meteor-client:color": "225,25,25",
-    "modmenu": {
-      "parent": {
-        "id": "meteor-client"
-      }
-    }
+    "meteor-client:color": "255,200,40",
+    "modmenu": { "parent": { "id": "meteor-client" } }
   },
   "depends": {
     "java": ">=21",
