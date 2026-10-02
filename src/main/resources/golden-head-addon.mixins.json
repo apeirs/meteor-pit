@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "dev.goldenhead.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ModuleAccessor",
+    "ModulesMixin",
+    "NametagsMixin",
+    "TextDisplayAccessor",
+    "ZAimbotMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

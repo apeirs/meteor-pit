@@ -10,6 +10,7 @@
   "entrypoints": {
     "meteor": ["dev.goldenhead.GoldenHeadAddon"]
   },
+  "mixins": ["golden-head-addon.mixins.json"],
   "custom": {
     "meteor-client:color": "255,200,40",
     "modmenu": { "parent": { "id": "meteor-client" } }
