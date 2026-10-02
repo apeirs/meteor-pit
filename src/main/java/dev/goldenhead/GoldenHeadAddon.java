@@ -5,6 +5,7 @@ import dev.goldenhead.modules.AutoGoldenHead;
 import dev.goldenhead.modules.Beast;
 import dev.goldenhead.modules.CarePackage;
 import dev.goldenhead.modules.DragonEgg;
+import dev.goldenhead.modules.LowPopFinder;
 import dev.goldenhead.modules.QuickMaths;
 import dev.goldenhead.modules.TeamDeathmatch;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
@@ -27,6 +28,7 @@ public class GoldenHeadAddon extends MeteorAddon {
         Modules.get().add(new DragonEgg());
         Modules.get().add(new CarePackage());
         Modules.get().add(new QuickMaths());
+        Modules.get().add(new LowPopFinder());
 
         Commands.add(new PitInfoCommand());
     }

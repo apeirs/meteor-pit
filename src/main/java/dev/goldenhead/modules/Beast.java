@@ -11,12 +11,11 @@ import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import dev.goldenhead.mixin.TextDisplayAccessor;
+import dev.goldenhead.utils.PitUtils;
 import net.minecraft.entity.decoration.DisplayEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
-import net.minecraft.scoreboard.*;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Box;
 
 import java.util.HashSet;
@@ -108,7 +107,7 @@ public class Beast extends Module {
 
         String key = keyword.get().toLowerCase(Locale.ROOT).trim();
         if (key.isEmpty()) return;
-        eventActive = sidebarContains(key);
+        eventActive = PitUtils.sidebarContains(key);
 
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (namedBeast(player, key) || (eventActive && statBeast(player))) beasts.add(player.getUuid());
@@ -145,22 +144,8 @@ public class Beast extends Module {
             && player.getMainHandStack().isOf(Items.DIAMOND_SWORD);
     }
 
-    private boolean sidebarContains(String key) {
-        Scoreboard scoreboard = mc.world.getScoreboard();
-        ScoreboardObjective sidebar = scoreboard.getObjectiveForSlot(ScoreboardDisplaySlot.SIDEBAR);
-        if (sidebar == null) return false;
-        if (clean(sidebar.getDisplayName()).contains(key)) return true;
-
-        for (ScoreboardEntry entry : scoreboard.getScoreboardEntries(sidebar)) {
-            Text line = Team.decorateName(scoreboard.getScoreHolderTeam(entry.owner()), entry.name());
-            if (clean(line).contains(key)) return true;
-        }
-        return false;
-    }
-
     public static String clean(Text text) {
-        String s = Formatting.strip(text.getString());
-        return s == null ? "" : s.toLowerCase(Locale.ROOT);
+        return PitUtils.clean(text);
     }
 
     private static Beast get() {
