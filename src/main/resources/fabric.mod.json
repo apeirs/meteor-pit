@@ -3,7 +3,7 @@
   "id": "golden-head-addon",
   "version": "${version}",
   "name": "Golden Head Addon",
-  "description": "Auto-uses Golden Heads on Pit servers.",
+  "description": "Auto-uses Golden Heads, Fractured Souls and Rage Potatoes on Pit servers.",
   "authors": ["lucas"],
   "icon": "assets/goldenhead/icon.png",
   "environment": "client",

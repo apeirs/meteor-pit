@@ -7,14 +7,12 @@ import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.player.FindItemResult;
 import meteordevelopment.meteorclient.utils.player.InvUtils;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 
+import java.util.List;
 import java.util.Locale;
 
 public class AutoGoldenHead extends Module {
@@ -29,17 +27,10 @@ public class AutoGoldenHead extends Module {
         .build()
     );
 
-    private final Setting<String> keyword = sgGeneral.add(new StringSetting.Builder()
-        .name("name-keyword")
-        .description("Text the item name (or lore) must contain. Case and colors ignored.")
-        .defaultValue("golden head")
-        .build()
-    );
-
-    private final Setting<Boolean> headsOnly = sgGeneral.add(new BoolSetting.Builder()
-        .name("player-heads-only")
-        .description("Only match player heads, not other items with the same name.")
-        .defaultValue(true)
+    private final Setting<List<String>> items = sgGeneral.add(new StringListSetting.Builder()
+        .name("items")
+        .description("Item names to use, highest priority first. Case and colors ignored.")
+        .defaultValue(List.of("golden head", "fractured soul", "rage potato"))
         .build()
     );
 
@@ -85,7 +76,7 @@ public class AutoGoldenHead extends Module {
     private int timer;
 
     public AutoGoldenHead() {
-        super(Categories.Combat, "auto-golden-head", "Right-clicks Golden Heads when your golden hearts run out.");
+        super(Categories.Combat, "auto-golden-head", "Right-clicks Golden Heads, Fractured Souls and Rage Potatoes when your golden hearts run out.");
     }
 
     @Override
@@ -106,8 +97,8 @@ public class AutoGoldenHead extends Module {
         if (mc.player.getAbsorptionAmount() > maxAbsorption.get() * 2) return;
         if (pauseWhileUsing.get() && mc.player.isUsingItem()) return;
 
-        FindItemResult head = InvUtils.find(this::isGoldenHead);
-        if (!head.found()) return;
+        FindItemResult head = findItem();
+        if (head == null) return;
 
         if (!head.isHotbar() && !head.isOffhand()) {
             if (!pullFromInventory.get()) return;
@@ -133,21 +124,31 @@ public class AutoGoldenHead extends Module {
         timer = delay.get();
     }
 
-    private boolean isGoldenHead(ItemStack stack) {
-        if (stack.isEmpty()) return false;
-        if (headsOnly.get() && !stack.isOf(Items.PLAYER_HEAD)) return false;
+    // Hotbar/offhand first (in priority order), so we only pull from the inventory when the hotbar has nothing.
+    private FindItemResult findItem() {
+        FindItemResult fallback = null;
+        for (String name : items.get()) {
+            String key = name.toLowerCase(Locale.ROOT).trim();
+            if (key.isEmpty()) continue;
+            FindItemResult result = InvUtils.find(stack -> matches(stack, key));
+            if (!result.found()) continue;
+            if (result.isHotbar() || result.isOffhand()) return result;
+            if (fallback == null) fallback = result;
+        }
+        return fallback;
+    }
 
-        String key = keyword.get().toLowerCase(Locale.ROOT).trim();
-        if (key.isEmpty()) return stack.isOf(Items.PLAYER_HEAD);
-        if (clean(stack.getName()).contains(key)) return true;
-
-        LoreComponent lore = stack.get(DataComponentTypes.LORE);
-        if (lore != null) {
-            for (Text line : lore.lines()) {
-                if (clean(line).contains(key)) return true;
-            }
+    private boolean matches(ItemStack stack) {
+        for (String name : items.get()) {
+            String key = name.toLowerCase(Locale.ROOT).trim();
+            if (!key.isEmpty() && matches(stack, key)) return true;
         }
         return false;
+    }
+
+    // Name only, not lore: Pit lore often mentions other items ("heals like a Golden Head").
+    private static boolean matches(ItemStack stack, String key) {
+        return !stack.isEmpty() && clean(stack.getName()).contains(key);
     }
 
     private static String clean(Text text) {
@@ -157,6 +158,6 @@ public class AutoGoldenHead extends Module {
 
     @Override
     public String getInfoString() {
-        return String.valueOf(InvUtils.find(this::isGoldenHead).count());
+        return String.valueOf(InvUtils.find(this::matches).count());
     }
 }
