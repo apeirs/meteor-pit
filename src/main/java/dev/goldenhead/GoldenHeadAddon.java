@@ -3,6 +3,7 @@ package dev.goldenhead;
 import dev.goldenhead.commands.PitInfoCommand;
 import dev.goldenhead.modules.AutoGoldenHead;
 import dev.goldenhead.modules.Beast;
+import dev.goldenhead.modules.DragonEgg;
 import dev.goldenhead.modules.TeamDeathmatch;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
 import meteordevelopment.meteorclient.commands.Commands;
@@ -21,6 +22,7 @@ public class GoldenHeadAddon extends MeteorAddon {
         Modules.get().add(new AutoGoldenHead());
         Modules.get().add(new TeamDeathmatch());
         Modules.get().add(new Beast());
+        Modules.get().add(new DragonEgg());
 
         Commands.add(new PitInfoCommand());
     }
