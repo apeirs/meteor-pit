@@ -1,8 +1,10 @@
 package dev.goldenhead.modules;
 
 import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.utils.BaritonePather;
 import meteordevelopment.meteorclient.events.render.Render3DEvent;
 import meteordevelopment.meteorclient.events.world.TickEvent;
+import meteordevelopment.meteorclient.pathing.BaritoneUtils;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.Utils;
@@ -31,7 +33,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Dragon Egg event: locks onto the closest dragon egg / dragon head (block, or an armor stand wearing one),
- * runs to it and spams clicks at a random 20-100 ms interval, so a click lands right as any server cooldown ends.
+ * paths to it with Baritone (or runs straight) and spams clicks at a random 20-100 ms interval, so a click lands right as any server cooldown ends.
  * Clicks run per rendered frame, not per tick, so intervals under 50 ms (one tick) actually happen.
  */
 public class DragonEgg extends Module {
@@ -106,9 +108,17 @@ public class DragonEgg extends Module {
         .build()
     );
 
+    private final Setting<Boolean> pathfind = sgMove.add(new BoolSetting.Builder()
+        .name("pathfind")
+        .description("Use Baritone for the fastest route (no mining or placing, any drop height). Falls back to running straight if Baritone is missing or finds no path.")
+        .defaultValue(true)
+        .visible(run::get)
+        .build()
+    );
+
     private final Setting<Boolean> autoJump = sgMove.add(new BoolSetting.Builder()
         .name("auto-jump")
-        .description("Jump when running into something.")
+        .description("Jump when running into something (straight-line running only).")
         .defaultValue(true)
         .visible(run::get)
         .build()
@@ -119,6 +129,8 @@ public class DragonEgg extends Module {
     private boolean moving;
     private boolean inReach;
     private int scanTimer;
+    private int repathTimer;
+    private BaritonePather pather;
     private long nextClick;
 
     public DragonEgg() {
@@ -131,12 +143,14 @@ public class DragonEgg extends Module {
         targetEntity = null;
         scanTimer = 0;
         nextClick = 0;
+        repathTimer = 0;
         inReach = false;
     }
 
     @Override
     public void onDeactivate() {
         stopMoving();
+        if (pather != null) pather.release();
     }
 
     @EventHandler
@@ -154,20 +168,37 @@ public class DragonEgg extends Module {
         if (aim == null || mc.currentScreen != null) {
             inReach = false;
             stopMoving();
+            if (pather != null) pather.release();
             return;
         }
 
+        inReach = mc.player.getEyePos().distanceTo(aim) <= reach.get();
+        if (!run.get() || inReach) {
+            if (pather != null) pather.stop();
+            stopMoving();
+            lookAt(aim);
+            return;
+        }
+
+        // Baritone drives (keys and rotation) while it has a path; otherwise run straight at the egg.
+        if (pathfind.get() && BaritoneUtils.IS_AVAILABLE) {
+            if (pather == null) pather = new BaritonePather();
+            BlockPos goal = targetBlock != null ? targetBlock : targetEntity.getBlockPos();
+            if (pather.isActive() || --repathTimer <= 0) {
+                repathTimer = 10; // a failed search is retried twice a second, not every tick
+                pather.pathTo(goal, Math.max(1, (int) Math.floor(reach.get()) - 1));
+            }
+            if (pather.isActive()) {
+                stopMoving();
+                return;
+            }
+        }
+
         lookAt(aim);
-
-        boolean inReach = mc.player.getEyePos().distanceTo(aim) <= reach.get();
-        if (run.get() && !inReach) {
-            press(mc.options.forwardKey, true);
-            press(mc.options.sprintKey, true);
-            press(mc.options.jumpKey, autoJump.get() && mc.player.horizontalCollision && mc.player.isOnGround());
-            moving = true;
-        } else stopMoving();
-
-        this.inReach = inReach;
+        press(mc.options.forwardKey, true);
+        press(mc.options.sprintKey, true);
+        press(mc.options.jumpKey, autoJump.get() && mc.player.horizontalCollision && mc.player.isOnGround());
+        moving = true;
     }
 
     @EventHandler

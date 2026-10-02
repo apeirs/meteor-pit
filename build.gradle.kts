@@ -27,6 +27,9 @@ dependencies {
 
     // Meteor
     modImplementation(libs.meteor.client)
+
+    // Baritone: optional at runtime, only used when installed (pathfinding in DragonEgg)
+    modCompileOnly("meteordevelopment:baritone:1.21.11-SNAPSHOT")
 }
 
 tasks {
