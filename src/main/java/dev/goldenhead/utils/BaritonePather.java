@@ -4,6 +4,7 @@ import baritone.api.BaritoneAPI;
 import baritone.api.IBaritone;
 import baritone.api.Settings;
 import baritone.api.pathing.goals.GoalNear;
+import baritone.api.pathing.goals.GoalYLevel;
 import net.minecraft.util.math.BlockPos;
 
 /**
@@ -26,6 +27,15 @@ public class BaritonePather {
         if (pos.equals(goal) && isActive()) return;
         goal = pos;
         baritone().getCustomGoalProcess().setGoalAndPath(new GoalNear(pos, range));
+    }
+
+    /** Path to any spot at or below this Y (used to drop out of spawn). */
+    public void pathDownTo(int y) {
+        apply();
+        BlockPos marker = new BlockPos(0, y, 0);
+        if (marker.equals(goal) && isActive()) return;
+        goal = marker;
+        baritone().getCustomGoalProcess().setGoalAndPath(new GoalYLevel(y));
     }
 
     public boolean isActive() {

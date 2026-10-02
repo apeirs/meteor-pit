@@ -1,13 +1,10 @@
 package dev.goldenhead;
 
 import dev.goldenhead.commands.PitInfoCommand;
-import dev.goldenhead.modules.AutoGoldenHead;
-import dev.goldenhead.modules.Beast;
-import dev.goldenhead.modules.CarePackage;
-import dev.goldenhead.modules.DragonEgg;
-import dev.goldenhead.modules.LowPopFinder;
-import dev.goldenhead.modules.QuickMaths;
-import dev.goldenhead.modules.TeamDeathmatch;
+import dev.goldenhead.commands.PitSpawnCommand;
+import dev.goldenhead.modules.*;
+import dev.goldenhead.utils.SpawnArea;
+import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
 import meteordevelopment.meteorclient.commands.Commands;
 import meteordevelopment.meteorclient.systems.modules.Category;
@@ -29,8 +26,15 @@ public class GoldenHeadAddon extends MeteorAddon {
         Modules.get().add(new CarePackage());
         Modules.get().add(new QuickMaths());
         Modules.get().add(new LowPopFinder());
+        Modules.get().add(new AutoFight());
+        Modules.get().add(new GiantCake());
+        Modules.get().add(new AutoEvent());
 
         Commands.add(new PitInfoCommand());
+        Commands.add(new PitSpawnCommand());
+
+        // Always-on spawn learning (used by ZAimbot, Auto Fight and Auto Event).
+        MeteorClient.EVENT_BUS.subscribe(SpawnArea.INSTANCE);
     }
 
     @Override

@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "ModuleAccessor",
+    "BossBarHudAccessor",
     "ModulesMixin",
     "NametagsMixin",
     "TextDisplayAccessor",

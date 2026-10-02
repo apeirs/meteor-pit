@@ -2,6 +2,7 @@ package dev.goldenhead.mixin;
 
 import dev.goldenhead.modules.Beast;
 import dev.goldenhead.modules.TeamDeathmatch;
+import dev.goldenhead.utils.SpawnArea;
 import meteordevelopment.meteorclient.events.render.Render3DEvent;
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.utils.entity.SortPriority;
@@ -37,16 +38,22 @@ public abstract class ZAimbotMixin {
         throw new AssertionError();
     }
 
-    // TDM: drop teammates from the target list.
+    // Never aim at players in spawn (they can't be hit) or TDM teammates.
     @Inject(method = "entityCheck", at = @At("RETURN"), cancellable = true)
     private void goldenhead$teamFilter(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (cir.getReturnValueZ() && !TeamDeathmatch.allowTarget(entity)) cir.setReturnValue(false);
+        if (!cir.getReturnValueZ()) return;
+        if (SpawnArea.isInSpawn(entity) || !TeamDeathmatch.allowTarget(entity)) cir.setReturnValue(false);
     }
 
-    // Beast event: aim at a valid beast first; otherwise ZAimbot picks a target as usual.
+    // Off while we stand in spawn; during Beast, aim at a valid beast first, otherwise ZAimbot picks as usual.
     @Inject(method = "onRender3D", at = @At("HEAD"), cancellable = true)
     private void goldenhead$beastFirst(Render3DEvent event, CallbackInfo ci) {
-        if (mc.player == null || mc.world == null || !Beast.shouldPrioritize()) return;
+        if (mc.player == null || mc.world == null) return;
+        if (SpawnArea.isInSpawn(mc.player)) {
+            ci.cancel();
+            return;
+        }
+        if (!Beast.shouldPrioritize()) return;
 
         Entity beast = TargetUtils.get(entity -> Beast.isBeast(entity) && entityCheck(entity), priority.get());
         if (beast == null) return;
