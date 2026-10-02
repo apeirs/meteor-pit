@@ -53,7 +53,9 @@ public class PitInfoCommand extends Command {
                 var stack = target.getEquippedStack(slot);
                 if (!stack.isEmpty()) info("%s: %s \"%s\"", slot.getName(), Registries.ITEM.getId(stack.getItem()).getPath(), stack.getName().getString());
             }
-            info("TDM team (hat): %s, beast now: %s", TeamDeathmatch.fromHat(target), Beast.isBeast(target));
+            info("TDM team: hat %s, name %s | you: hat %s, name %s | beast now: %s",
+                TeamDeathmatch.fromHat(target), TeamDeathmatch.fromName(target),
+                TeamDeathmatch.fromHat(mc.player), TeamDeathmatch.fromName(mc.player), Beast.isBeast(target));
 
             for (Entity entity : mc.world.getEntities()) {
                 if (entity instanceof PlayerEntity || entity.squaredDistanceTo(target) > 9) continue;
