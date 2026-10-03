@@ -2,6 +2,7 @@ package dev.goldenhead.mixin;
 
 import dev.goldenhead.modules.Beast;
 import dev.goldenhead.modules.TeamDeathmatch;
+import dev.goldenhead.utils.AimLock;
 import dev.goldenhead.utils.SpawnArea;
 import meteordevelopment.meteorclient.events.render.Render3DEvent;
 import meteordevelopment.meteorclient.settings.Setting;
@@ -48,6 +49,8 @@ public abstract class ZAimbotMixin {
     // Off while we stand in spawn; during Beast, aim at a valid beast first, otherwise ZAimbot picks as usual.
     @Inject(method = "onRender3D", at = @At("HEAD"), cancellable = true)
     private void goldenhead$beastFirst(Render3DEvent event, CallbackInfo ci) {
+        // Drop last frame's lock. aim() puts it back only when ZAimbot really has someone.
+        AimLock.clear();
         if (mc.player == null || mc.world == null) return;
         if (SpawnArea.isInSpawn(mc.player)) {
             ci.cancel();
@@ -60,5 +63,10 @@ public abstract class ZAimbotMixin {
 
         aim(mc.player, beast);
         ci.cancel();
+    }
+
+    @Inject(method = "aim", at = @At("HEAD"))
+    private void goldenhead$rememberLock(LivingEntity player, Entity target, CallbackInfo ci) {
+        AimLock.set(target);
     }
 }
