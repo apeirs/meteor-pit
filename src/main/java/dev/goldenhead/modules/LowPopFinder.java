@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import dev.goldenhead.utils.PitUtils;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.*;
@@ -97,7 +97,7 @@ public class LowPopFinder extends Module {
     private ClientWorld lastWorld;
 
     public LowPopFinder() {
-        super(GoldenHeadAddon.PIT, "low-pop-finder", "Hops Pit lobbies (join, count, /lobby, repeat) until one has few enough players.");
+        super(MeteorPitAddon.PIT, "low-pop-finder", "Hops Pit lobbies (join, count, /lobby, repeat) until one has few enough players.");
     }
 
     @Override

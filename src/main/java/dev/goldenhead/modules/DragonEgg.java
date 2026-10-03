@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -19,7 +19,7 @@ public class DragonEgg extends ClickTarget {
     private static final Set<Block> TARGET_BLOCKS = Set.of(Blocks.DRAGON_EGG, Blocks.DRAGON_HEAD, Blocks.DRAGON_WALL_HEAD);
 
     public DragonEgg() {
-        super(GoldenHeadAddon.PIT, "dragon-egg", "Locks onto the closest dragon egg/head, runs to it and spam-clicks it (random 20-100 ms).");
+        super(MeteorPitAddon.PIT, "dragon-egg", "Locks onto the closest dragon egg/head, runs to it and spam-clicks it (random 20-100 ms).");
     }
 
     @Override

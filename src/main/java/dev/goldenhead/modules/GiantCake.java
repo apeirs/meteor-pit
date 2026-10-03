@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -16,7 +16,7 @@ public class GiantCake extends ClickTarget {
     private static final Set<Block> BLOCKS = Set.of(Blocks.CAKE, Blocks.RED_TERRACOTTA, Blocks.BLACK_TERRACOTTA);
 
     public GiantCake() {
-        super(GoldenHeadAddon.PIT, "giant-cake", "Eats the Giant Cake as fast as possible, cherries and chocolate chips first.");
+        super(MeteorPitAddon.PIT, "giant-cake", "Eats the Giant Cake as fast as possible, cherries and chocolate chips first.");
     }
 
     @Override

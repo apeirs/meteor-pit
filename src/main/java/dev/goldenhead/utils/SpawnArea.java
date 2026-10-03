@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class SpawnArea {
     public static final SpawnArea INSTANCE = new SpawnArea();
-    private static final Logger LOG = LoggerFactory.getLogger("golden-head-addon");
+    private static final Logger LOG = LoggerFactory.getLogger("meteor-pit");
 
     /** Horizontal radius around the spawn point that counts as spawn. */
     public static final double RADIUS = 30;

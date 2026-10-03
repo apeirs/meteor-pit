@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import dev.goldenhead.mixin.TextDisplayAccessor;
 import meteordevelopment.meteorclient.events.game.GameJoinedEvent;
 import meteordevelopment.meteorclient.events.packets.InventoryEvent;
@@ -87,7 +87,7 @@ public class CarePackage extends ClickTarget {
     private boolean tookSomething;
 
     public CarePackage() {
-        super(GoldenHeadAddon.PIT, "care-package", "Gets to the care package, spam-clicks it open and instantly loots it, best items first.");
+        super(MeteorPitAddon.PIT, "care-package", "Gets to the care package, spam-clicks it open and instantly loots it, best items first.");
     }
 
     @Override

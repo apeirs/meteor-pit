@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "golden-head-addon",
+  "id": "meteor-pit",
   "version": "${version}",
-  "name": "Golden Head Addon",
-  "description": "Auto-uses Golden Heads, Fractured Souls and Rage Potatoes on Pit servers.",
+  "name": "Meteor Pit",
+  "description": "Pit modules for Meteor Client.",
   "authors": ["lucas"],
-  "icon": "assets/goldenhead/icon.png",
+  "icon": "assets/meteorpit/icon.png",
   "environment": "client",
   "entrypoints": {
-    "meteor": ["dev.goldenhead.GoldenHeadAddon"]
+    "meteor": ["dev.goldenhead.MeteorPitAddon"]
   },
-  "mixins": ["golden-head-addon.mixins.json"],
+  "mixins": ["meteor-pit.mixins.json"],
   "custom": {
     "meteor-client:color": "255,200,40",
     "modmenu": { "parent": { "id": "meteor-client" } }

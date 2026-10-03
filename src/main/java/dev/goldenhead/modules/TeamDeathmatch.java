@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.BoolSetting;
 import meteordevelopment.meteorclient.settings.IntSetting;
@@ -57,7 +57,7 @@ public class TeamDeathmatch extends Module {
     );
 
     public TeamDeathmatch() {
-        super(GoldenHeadAddon.PIT, "team-deathmatch", "During TDM, detects your team (hat or name color) and makes ZAimbot target only the other team.");
+        super(MeteorPitAddon.PIT, "team-deathmatch", "During TDM, detects your team (hat or name color) and makes ZAimbot target only the other team.");
     }
 
     private Team ownTeam = Team.None;

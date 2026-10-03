@@ -1,6 +1,6 @@
 package dev.goldenhead.mixin;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,9 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ModulesMixin {
     @Inject(method = "add", at = @At("HEAD"))
     private void goldenhead$moveToPit(Module module, CallbackInfo ci) {
-        if (module.getClass().getName().equals(GoldenHeadAddon.ZAIMBOT)) {
-            ((ModuleAccessor) module).setCategory(GoldenHeadAddon.PIT);
-            LoggerFactory.getLogger("golden-head-addon").info("Moved {} to the Pit category", module.name);
+        if (module.getClass().getName().equals(MeteorPitAddon.ZAIMBOT)) {
+            ((ModuleAccessor) module).setCategory(MeteorPitAddon.PIT);
+            LoggerFactory.getLogger("meteor-pit").info("Moved {} to the Pit category", module.name);
         }
     }
 }

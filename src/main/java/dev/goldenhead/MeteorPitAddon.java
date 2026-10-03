@@ -11,7 +11,7 @@ import meteordevelopment.meteorclient.systems.modules.Category;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import net.minecraft.item.Items;
 
-public class GoldenHeadAddon extends MeteorAddon {
+public class MeteorPitAddon extends MeteorAddon {
     public static final Category PIT = new Category("Pit", Items.GOLDEN_APPLE.getDefaultStack());
 
     // Modules from other addons that get filed under Pit instead of their own category (see ModulesMixin).

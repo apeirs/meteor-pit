@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import dev.goldenhead.utils.Mover;
 import dev.goldenhead.utils.SpawnArea;
 import meteordevelopment.meteorclient.events.render.Render3DEvent;
@@ -94,7 +94,7 @@ public class AutoFight extends Module {
     private long nextHit;
 
     public AutoFight() {
-        super(GoldenHeadAddon.PIT, "auto-fight", "Sprints at the closest valid enemy and hits at a random interval (default 40-95 ms).");
+        super(MeteorPitAddon.PIT, "auto-fight", "Sprints at the closest valid enemy and hits at a random interval (default 40-95 ms).");
     }
 
     @Override

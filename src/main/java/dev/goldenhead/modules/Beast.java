@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
@@ -91,7 +91,7 @@ public class Beast extends Module {
     private boolean eventActive;
 
     public Beast() {
-        super(GoldenHeadAddon.PIT, "beast", "Detects the beast in the Beast event: ZAimbot targets them first and Nametags shows them in red.");
+        super(MeteorPitAddon.PIT, "beast", "Detects the beast in the Beast event: ZAimbot targets them first and Nametags shows them in red.");
     }
 
     @Override

@@ -2,7 +2,7 @@ package dev.goldenhead.modules;
 
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.*;
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.player.FindItemResult;
 import meteordevelopment.meteorclient.utils.player.InvUtils;
@@ -76,7 +76,7 @@ public class AutoGoldenHead extends Module {
     private int timer;
 
     public AutoGoldenHead() {
-        super(GoldenHeadAddon.PIT, "auto-golden-head", "Right-clicks Golden Heads, Fractured Souls and Rage Potatoes when your golden hearts run out.");
+        super(MeteorPitAddon.PIT, "auto-golden-head", "Right-clicks Golden Heads, Fractured Souls and Rage Potatoes when your golden hearts run out.");
     }
 
     @Override

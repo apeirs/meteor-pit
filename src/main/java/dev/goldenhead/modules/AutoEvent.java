@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import dev.goldenhead.utils.*;
 import dev.goldenhead.utils.EventTracker.PitEvent;
 import meteordevelopment.meteorclient.events.game.GameJoinedEvent;
@@ -139,7 +139,7 @@ public class AutoEvent extends Module {
     private boolean auctionDumped;
 
     public AutoEvent() {
-        super(GoldenHeadAddon.PIT, "auto-event", "Detects the running Pit event and plays it: objectives, clicks, collecting, and sprint-hit combat.");
+        super(MeteorPitAddon.PIT, "auto-event", "Detects the running Pit event and plays it: objectives, clicks, collecting, and sprint-hit combat.");
     }
 
     @Override

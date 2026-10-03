@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import meteordevelopment.meteorclient.events.game.ReceiveMessageEvent;
 import meteordevelopment.meteorclient.events.render.Render3DEvent;
 import meteordevelopment.meteorclient.events.world.TickEvent;
@@ -56,7 +56,7 @@ public class QuickMaths extends Module {
     private long sendAt;
 
     public QuickMaths() {
-        super(GoldenHeadAddon.PIT, "quick-maths", "Solves the Quick Maths question and answers in chat after a random delay.");
+        super(MeteorPitAddon.PIT, "quick-maths", "Solves the Quick Maths question and answers in chat after a random delay.");
     }
 
     @Override

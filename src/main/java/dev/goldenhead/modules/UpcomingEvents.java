@@ -1,7 +1,7 @@
 package dev.goldenhead.modules;
 
 import com.google.gson.reflect.TypeToken;
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import meteordevelopment.meteorclient.events.render.Render2DEvent;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
@@ -119,7 +119,7 @@ public class UpcomingEvents extends Module {
     private long lastFetch;
 
     public UpcomingEvents() {
-        super(GoldenHeadAddon.PIT, "upcoming-events", "Shows the next minor and major Pit events in the top left (schedule from brookeafk.com).");
+        super(MeteorPitAddon.PIT, "upcoming-events", "Shows the next minor and major Pit events in the top left (schedule from brookeafk.com).");
     }
 
     @Override

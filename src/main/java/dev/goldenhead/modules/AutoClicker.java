@@ -1,6 +1,6 @@
 package dev.goldenhead.modules;
 
-import dev.goldenhead.GoldenHeadAddon;
+import dev.goldenhead.MeteorPitAddon;
 import dev.goldenhead.utils.AimLock;
 import dev.goldenhead.utils.SpawnArea;
 import meteordevelopment.meteorclient.events.render.Render3DEvent;
@@ -47,7 +47,7 @@ public class AutoClicker extends Module {
     private long nextClick;
 
     public AutoClicker() {
-        super(GoldenHeadAddon.PIT, "auto-clicker", "Left-clicks at a random 40-65 ms interval while an enemy is locked on. Turns off when you die.");
+        super(MeteorPitAddon.PIT, "auto-clicker", "Left-clicks at a random 40-65 ms interval while an enemy is locked on. Turns off when you die.");
     }
 
     @Override
