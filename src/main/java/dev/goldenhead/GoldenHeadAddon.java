@@ -27,6 +27,7 @@ public class GoldenHeadAddon extends MeteorAddon {
         Modules.get().add(new QuickMaths());
         Modules.get().add(new LowPopFinder());
         Modules.get().add(new AutoFight());
+        Modules.get().add(new AutoClicker());
         Modules.get().add(new GiantCake());
         Modules.get().add(new AutoEvent());
         Modules.get().add(new UpcomingEvents());
